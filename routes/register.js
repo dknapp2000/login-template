@@ -17,11 +17,11 @@ router.get('/', async function(req, res, next) {
 
 router.post( "/", async function( req, res, next ) {
  
-  const result = await registerNewUser( req.body );
+  const user = await registerNewUser( req.body );
 
-  console.log( result );
+  console.log( user );
   
-  res.json( result );
+  res.render( "login", { title: "login",  user: user } )
 });
 
 module.exports = router;
