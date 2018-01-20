@@ -4,7 +4,8 @@ const express = require('express');
 const router = express.Router();
 const passport = require( "passport" );
 const LocalStrategy = require( "passport-local" );
-const sqlite = require( "better-sqlite3" );
+const Database = require( "better-sqlite3" );
+const db = new Database( "./db/users.db" );
 
 /* GET login page. */
 router.get('/', function(req, res, next) {
@@ -20,11 +21,10 @@ module.exports = router;
 async function getUserByUsername( username ) {
   return new Promise( function( resolve, reject ) {
 
-    db.each( "SELECT * FROM users WHERE username = ?", [ username ], function( err, row ) {
-      if ( err ) return reject( err );
-      if ( ! row ) return resolve( null, null );
-      return resolve( null, row );
-    })
+    const user = db.prepare( "SELECT * FROM users WHERE username = ?" ).get( username );
+    if ( ! user ) return reject( user );
+    console.log( user );
+    return reject( user );
 
   })
 
