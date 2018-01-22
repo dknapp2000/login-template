@@ -6,7 +6,7 @@ const router        = express.Router();
 const passport      = require( "passport" );
 const LocalStrategy = require( "passport-local" );
 const db            = require( "../controllers/db-sqlite3.js" );
-const bcrypt        = require( "bcrypt" );
+const bcrypt        = require( "bcryptjs" );
 
 /* GET login page. */
 router.get('/', async function(req, res, next) {
