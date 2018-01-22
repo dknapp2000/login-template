@@ -1,3 +1,15 @@
 <h1>{{title}}</h1>
+
+{{#each messages}}
+    <div class="alert alert-warning alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+        {{this}}
+    </div>
+{{/each}}
+
 <p>Welcome to {{title}}</p>
+<code>
+
 <p>Hello {{user}}!</>
+
+</code>

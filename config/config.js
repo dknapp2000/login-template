@@ -10,7 +10,12 @@ const config = {
         cookieSecret: "thisIsMyDevSecret",
         dbtype: "sqlite3",
         dbname: "./db/users.db",
-        saltRounds: 10
+        saltRounds: 10,
+        smtpConfig: {
+            host: "smtpext.electrolux-na.com",
+            port: 25,
+            secure: false,
+        }
     },
     "uat" : {
         env: ENV,
@@ -19,7 +24,13 @@ const config = {
         cookieSecret: "thisIsMyUATSecret",
         dbtype: "sqlite3",
         dbname: "./db/users.db",
-        saltRounds: 10
+        saltRounds: 10,
+        smtpConfig: {
+            host: "smtpext.electrolux-na.com",
+            port: 25,
+            secure: false,
+
+        }
     },
     "prod" : {
         env: ENV,
@@ -28,7 +39,13 @@ const config = {
         cookieSecret: "da39a3ee5e6b4b0d3255bfef95601890afd80709",
         dbtype: "sqlite3",
         dbname: "./db/users.db",
-        saltRounds: 10
+        saltRounds: 10,
+        smtpConfig: {
+            host: "smtpext.electrolux-na.com",
+            port: 25,
+            secure: false,
+
+        }
     }
 };
 

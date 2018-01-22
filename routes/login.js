@@ -44,7 +44,13 @@ router.post( "/",
     req.session.user = user;
     req.session.auth = true;
 
-    console.log( { user: user, reqUser: req.user, reqSession: req.session, auth: req.isAuthenticated() } );
+    req.flash( "someother", [ `You are logged in as ${user.firstname}.` ] );
+    req.flash( "error", `You are logged in as ${user.firstname}.` );
+    req.flash( "warning", `You are logged in as ${user.firstname}.` );
+    req.flash( "private", `You are logged in as ${user.firstname}.` );
+    req.flash( "info", `You are logged in as ${user.firstname}.` );
+
+    console.log( { user: JSON.stringify( user, null, 2 ), reqUser: req.user, reqSession: req.session, auth: req.isAuthenticated() } );
     res.redirect( "/" );
 });
 
