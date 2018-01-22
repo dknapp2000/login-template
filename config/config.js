@@ -7,19 +7,28 @@ const config = {
         env: ENV,
         envName: "development",
         port: 3501,
-        cookieSecret: "thisIsMyDevSecret"
+        cookieSecret: "thisIsMyDevSecret",
+        dbtype: "sqlite3",
+        dbname: "./db/users.db",
+        saltRounds: 10
     },
     "uat" : {
         env: ENV,
         envName: "UAT",
         port: 3502,
-        cookieSecret: "thisIsMyUATSecret" 
+        cookieSecret: "thisIsMyUATSecret",
+        dbtype: "sqlite3",
+        dbname: "./db/users.db",
+        saltRounds: 10
     },
     "prod" : {
         env: ENV,
         envName: "production",
         port: 3500,
-        cookieSecret: "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+        cookieSecret: "da39a3ee5e6b4b0d3255bfef95601890afd80709",
+        dbtype: "sqlite3",
+        dbname: "./db/users.db",
+        saltRounds: 10
     }
 };
 

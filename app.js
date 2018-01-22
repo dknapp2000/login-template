@@ -1,16 +1,17 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var bodyParser = require('body-parser');
-const passport = require( "passport" );
-const cookieParser = require( "cookie-parser" );
-const cookieSession = require( "cookie-session" );
-var index = require('./routes/index');
-var users = require('./routes/users');
-const login = require( "./routes/login" );
-const register = require( "./routes/register" );
-const config = require( "./config/config.js" );
+var express             = require('express');
+var path                = require('path');
+var favicon             = require('serve-favicon');
+var logger              = require('morgan');
+var bodyParser          = require('body-parser');
+const passport          = require( "passport" );
+const cookieParser      = require( "cookie-parser" );
+const cookieSession     = require( "cookie-session" );
+var index               = require('./routes/index');
+var users               = require('./routes/users');
+const login             = require( "./routes/login" );
+const register          = require( "./routes/register" );
+const logout            = require( "./routes/logout" );
+const config            = require( "./config/config.js" );
 
 var app = express();
 
@@ -23,7 +24,7 @@ app.set('view engine', 'hbs');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
+//app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 /*
  * Set up the cookie-session in req.session
@@ -38,8 +39,22 @@ app.use( cookieSession( {
  */
 app.use( passport.initialize() );
 
+app.use( function( req, res, next ) { 
+    console.log( "Session Cookie     : ", req.session );
+    next();
+});
+
 app.use( "/login", login );
 app.use( "/register", register );
+app.use("/logout", logout );
+
+app.use( function( req, res, next ) {
+    if ( req.session && req.session.auth ) {
+        return next();
+    }
+    console.log( "Not authorized, redirecting to login page." );
+    res.redirect( "/login" );
+});
 
 app.use('/', index);
 app.use('/users', users);
