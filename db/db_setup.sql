@@ -23,6 +23,6 @@ values ( 'don@dknapp.com', 'Don', 'Knapp', 'test', 'ADMIN', 'Y' );
 .mode column
 .headers on 
 
-select * from users;
+select id, username, firstname, lastname, role_nm, is_active, email_is_verified, pw_reset_key from users;
 
 --delete from users

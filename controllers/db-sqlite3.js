@@ -9,12 +9,22 @@ function getUserByUsername( username ) {
 
         try {
             console.log( 'Starting query.' );
-            const row = db.prepare( "SELECT * FROM users WHERE username = ? COLLATE NOCASE" ).get( username );
-            console.log( row );
+            const row = db.prepare( `
+                select id, 
+                       username, 
+                       firstname, 
+                       lastname, 
+                       role_nm, 
+                       is_active, 
+                       email_is_verfied, 
+                       pw_reset_key,
+                       password
+                  from users 
+                 WHERE username = ? 
+                 COLLATE NOCASE` ).get( username );
             return resolve( row );
         }
             catch (err) {
-            console.err( err );
             return reject( err );
         }   
 
@@ -29,17 +39,26 @@ function registerNewUser( newUser ) {
 
   return new Promise( function( resolve, reject ) {
     const { username, firstname, lastname, password } = newUser;
-    console.log( username, firstname, lastname, password );
 
       const row = db.prepare( "SELECT * FROM users WHERE username = ? COLLATE NOCASE").get( username );
       if ( row ) return resolve( { "msg": "Email is already in use." } )
       
       const stmt = db.prepare( "INSERT INTO users ( username, firstname, lastname, password ) VALUES ( ?,?,?,? )");
       const info = stmt.run( username, firstname, lastname, password );
-      console.log( "INSERT: ", info );
 
-      const user = db.prepare( "SELECT * FROM users WHERE username = ? COLLATE NOCASE" ).get( username );
-      console.log( user );
+      const user = db.prepare( `
+      select id, 
+             username, 
+             firstname, 
+             lastname, 
+             role_nm, 
+             is_active, 
+             email_is_verfied, 
+             pw_reset_key,
+             password
+        from users 
+       WHERE username = ? 
+       COLLATE NOCASE` ).get( username );
       resolve( user );
     })
 }

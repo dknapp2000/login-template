@@ -18,7 +18,7 @@ passport.use( new LocalStrategy(
         const isValidPassword = await validPassword( password, user.password );
 
         if ( isValidPassword ) {
-            console.log( "USERNAME ID : ", user.id );
+
             return done( null, user );
         }
 
@@ -48,6 +48,7 @@ router.post( "/",
     async function( req, res, next ) {
     
     const user = await db.getUserByUsername( req.body.username );
+    delete user.password;
     req.session.user = user;
     req.session.auth = true;
 
