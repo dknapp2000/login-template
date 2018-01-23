@@ -12,7 +12,7 @@ const config = {
         dbname: "./db/users.db",
         saltRounds: 10,
         smtpConfig: {
-            host: "smtpext.electrolux-na.com",
+            host: "smtpext.example.com",
             port: 25,
             secure: false,
         },
@@ -21,10 +21,10 @@ const config = {
                 dbname: "./db/users.db"
             },
             mssql: {
-                "user":     "ReverseLogistix",
-                "password": "RLAPIPOC",
-                "server":   "usws1640.biz.electrolux.com",
-                "database": "Casanova",
+                "user":     "someuser",
+                "password": "somepassword",
+                "server":   "someserver.example.com",
+                "database": "testdatabase",
                         requestTimeout: 300000
             }
         }
@@ -38,7 +38,7 @@ const config = {
         dbname: "./db/users.db",
         saltRounds: 10,
         smtpConfig: {
-            host: "smtpext.electrolux-na.com",
+            host: "smtpext.example.com",
             port: 25,
             secure: false,
 
@@ -48,10 +48,10 @@ const config = {
                 dbname: "./db/users.db"
             },
             mssql: {
-                "user":     "ReverseLogistix",
-                "password": "RLAPIPOC",
-                "server":   "usws1640.biz.electrolux.com",
-                "database": "Casanova",
+                "user":     "someuser",
+                "password": "somepassword",
+                "server":   "someserver.example.com",
+                "database": "testdatabase",
                         requestTimeout: 300000
             }
         }
@@ -65,16 +65,16 @@ const config = {
         dbname: "./db/users.db",
         saltRounds: 10,
         smtpConfig: {
-            host: "smtpext.electrolux-na.com",
+            host: "smtpext.example.com",
             port: 25,
             secure: false,
 
         },
         dbConfig: {
-            "user":     "buildercom",
-            "password": "buildercom!7",
-            "server":   "USWCL115-SQL1.biz.electrolux.com",
-            "database": "BUILDERCOM",
+            "user":     "someuser",
+            "password": "somepassword",
+            "server":   "prodhost.example.com",
+            "database": "somedatabase",
                     requestTimeout: 300000
             }
         }
