@@ -5,7 +5,7 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
 
     res.render('index', { title: 'Express', 
-        user: JSON.stringify( req.session ),
+        user: JSON.stringify( req.session, null, 2 ),
         info: req.flash( "info" ), 
         warning: req.flash( "warning" ),
         success: req.flash( "success" ),

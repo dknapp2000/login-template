@@ -9,6 +9,7 @@ router.get('/', function(req, res, next) {
 
     req.session.user = null;
     req.session.auth=false;
+    req.session.flash = {};
     req.flash( "error", "You have been logged out." );
 
     console.log( req.session );
