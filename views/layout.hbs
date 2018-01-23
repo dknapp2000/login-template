@@ -1,12 +1,26 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <title>{{title}}</title>
     <link rel="stylesheet" href="/stylesheets/bootstrap.css">
     <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
 
-  </head>
-  <body>
+<body>
+    <div class="container">
+        {{#each success}}
+            <div class="alert alert-success" role="alert">{{this}}</div>
+        {{/each}} {{#each info}}
+            <div class="alert alert-info" role="alert">{{this}}</div>
+        {{/each}} {{#each warning}}
+            <div class="alert alert-warning" role="alert">{{this}}</div>
+        {{/each}} {{#each danger}}
+            <div class="alert alert-danger" role="alert">{{this}}</div>
+        {{/each}}
+    </div>
+
     {{{body}}}
-  </body>
+</body>
+
 </html>
