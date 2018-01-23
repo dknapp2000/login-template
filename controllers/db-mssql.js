@@ -72,9 +72,45 @@ db.registerNewUser = function( newUser ) {
     })
 };
 
+db.setPwResetHash = function( user ) {
+    debug( "db.setPwResetHash()", user );
+
+    return new Promise( async function( resolve, reject ) {
+        const { id, pw_reset_key } = user;
+
+        const updateResult = await db.pool.request()
+        .input( "id", mssql.Int, id )
+        .input( "pw_reset_key", mssql.VarChar, pw_reset_key )
+        .query(`
+            UPDATE bld_users SET pw_reset_key = @pw_reset_key WHERE id = @id
+        `)
+
+        resolve( {status: "OK" } );
+    })
+};
+
+db.setNewPassword = function( user ) {
+    debug( "db.setPwResetHash()", user );
+    const { id, hash } = user;
+
+    return new Promise( async function( resolve, reject ) {
+        const { id, password } = user;
+
+        const updateResult = await db.pool.request()
+        .input( "id", mssql.Int, id )
+        .input( "hash", mssql.VarChar, hash )
+        .query(`
+            UPDATE bld_users SET password = @hash, pw_reset_key = null WHERE id = @id
+        `)
+
+        resolve( {status: "OK" } );
+    })    
+}
 db.connect();
 
 module.exports = {
     getUserByUsername: db.getUserByUsername,
-    registerNewUser: db.registerNewUser           
+    registerNewUser: db.registerNewUser,
+    setPwResetHash: db.setPwResetHash,
+    setNewPassword: db.setNewPassword
 };

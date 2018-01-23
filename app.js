@@ -13,6 +13,7 @@ const login             = require( "./routes/login" );
 const register          = require( "./routes/register" );
 const logout            = require( "./routes/logout" );
 const resetpw           = require( "./routes/resetpw" );
+const newpassword       = require( "./routes/newpassword.js" );
 const config            = require( "./config/config.js" );
 
 var app = express();
@@ -51,6 +52,7 @@ app.use( "/login", login );
 app.use( "/register", register );
 app.use( "/logout", logout );
 app.use( "/resetpw", resetpw );
+app.use( "/newpassword", newpassword );
 
 app.use( function( req, res, next ) {
     if ( req.session && req.session.auth ) {
@@ -59,6 +61,8 @@ app.use( function( req, res, next ) {
     console.log( "Not authorized, redirecting to login page." );
     res.redirect( "/login" );
 });
+
+// TODO: Need to refresh stales cookies every N minutes  
 
 app.use('/', index);
 app.use('/users', users);
