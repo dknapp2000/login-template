@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
         info: req.flash( "info" ), 
         warning: req.flash( "warning" ),
         success: req.flash( "success" ),
-        danger: req.flash( "danger" ),
+        error: req.flash( "error" ),
     });
 });
 

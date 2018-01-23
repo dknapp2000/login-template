@@ -13,9 +13,9 @@ passport.use( new LocalStrategy(
         const user = await db.getUserByUsername( username );
         if ( ! user ) {
             console.log( "Username not found." );
-            return done( null, null );
+            return done( null, null, { message: "Bad username or password" } );
         }
-        const isValidPassword = validPassword( password, user.password );
+        const isValidPassword = await validPassword( password, user.password );
 
         if ( isValidPassword ) {
             console.log( "USERNAME ID : ", user.id );
@@ -23,7 +23,7 @@ passport.use( new LocalStrategy(
         }
 
         console.log( "Password not valid." );
-        return done( null, false )
+        return done( null, false, { message: "Bad username or password" } )
     })
 )
 
@@ -39,12 +39,12 @@ router.get('/', function(req, res, next) {
         info: req.flash( "info" ),
         warning: req.flash( "warning" ),
         success: req.flash( "success" ),
-        danger: req.flash( "danger" ),
+        error: req.flash( "error" ),
     });
 });
 
 router.post( "/", 
-    passport.authenticate( 'local', { failureRedirect: "/login" } ),
+    passport.authenticate( 'local', { failureRedirect: "/login", failureFlash: "Bad username or password" } ),
     async function( req, res, next ) {
     
     const user = await db.getUserByUsername( req.body.username );
