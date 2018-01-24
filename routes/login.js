@@ -11,10 +11,17 @@ const db = require( "../controllers/db-mssql.js" );
 passport.use( new LocalStrategy( 
     async function( username, password, done ) {
         const user = await db.getUserByUsername( username );
+        console.log( "USERUSERUSER: ", user );
         if ( ! user ) {
             console.log( "Username not found." );
             return done( null, null, { message: "Bad username or password" } );
         }
+        
+        if ( user.email_is_verified !== 'Y' ) {
+            console.log( "User email is not verified." );
+            return done( null, null, { message: "User email has not been verified." } );
+        }
+
         const isValidPassword = await validPassword( password, user.password );
 
         if ( isValidPassword ) {
@@ -44,7 +51,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post( "/", 
-    passport.authenticate( 'local', { failureRedirect: "/login", failureFlash: "Bad username or password" } ),
+    passport.authenticate( 'local', { failureRedirect: "/login", failureFlash: true } ),
     async function( req, res, next ) {
     
     const user = await db.getUserByUsername( req.body.username );
