@@ -40,7 +40,7 @@ router.post('/', function(req, res, next) {
     }
 
     if ( password.length < 5 || ! password.match( /\d/ ) || ! password.match( /\w/ ) || password.match( /\s/ ) ) {
-        req.flash( "error", "Password must by 8 characters long, containing numbers, letters, and stuff." );
+        req.flash( "error", "Password must be 8 characters long, containing numbers, letters, and stuff." );
         return res.redirect( `/newpassword/${id}/${hash}` );
     }
 
