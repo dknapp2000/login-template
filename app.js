@@ -36,6 +36,13 @@ app.use( cookieSession( {
   secret: config.cookieSecret,
   maxAge: 2 * 60 * 60 * 1000
 }));
+//
+// Make sure that the cookie is updated at least every minute so that the expiration time will be updated
+//
+app.use( function( req, res, next ) {
+  req.session.lastCall = Math.floor(Date.now() / 60e3);
+  next();
+});
 
 app.use( flash() );
 /*
