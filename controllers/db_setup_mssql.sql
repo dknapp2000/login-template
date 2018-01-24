@@ -11,6 +11,7 @@ create table bld_users (
         is_active           varchar(10) not null default 'N' check( is_active in ( 'Y', 'N' ) ),
         email_is_verfied    varchar(10) not null default 'N' check( email_is_verfied in ( 'N', 'Y' ) ),
         pw_reset_key        varchar(40) null,
+        pw_reset_dtm        datetime null,
         insert_dtm          datetime not null default CURRENT_TIMESTAMP,
         update_dtm          datetime not null default CURRENT_TIMESTAMP
 );

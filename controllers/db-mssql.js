@@ -106,11 +106,43 @@ db.setNewPassword = function( user ) {
         resolve( {status: "OK" } );
     })    
 }
+
+db.confirmEmail = function( id ) {
+    console.log( "db.confirmEmail():", id );
+
+    return new Promise( function( resolve, reject ) {
+        
+        if ( id != parseInt( id ) ) { 
+            console.log( "Bad int: ", id );
+            return reject( 0 );
+        }
+
+        db.pool.request()
+        .input( "id", mssql.Int, id )
+        .query(`
+            UPDATE bld_users SET email_is_verified = 'Y' WHERE id = @id
+        `)
+        .then( function( result ) {
+            if ( result.rowsAffected[0] === 1 ) {
+                resolve( true );
+            } else { 
+                resolve( false );
+            }
+        })
+        .catch( function( err ) {
+            const errMsg = { status: "Error", location: "db.confirmEmail", input: id, err: err };
+            console.log( err );
+            resolve( false );
+        })
+    })
+}
+
 db.connect();
 
 module.exports = {
     getUserByUsername: db.getUserByUsername,
     registerNewUser: db.registerNewUser,
     setPwResetHash: db.setPwResetHash,
-    setNewPassword: db.setNewPassword
+    setNewPassword: db.setNewPassword,
+    confirmEmail: db.confirmEmail
 };

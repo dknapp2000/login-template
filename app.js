@@ -1,3 +1,8 @@
+
+// Config
+const config            = require( "./config/config.js" );
+
+// Modules
 const express           = require('express');
 const path              = require('path');
 const favicon           = require('serve-favicon');
@@ -7,6 +12,8 @@ const passport          = require( "passport" );
 const cookieParser      = require( "cookie-parser" );
 const cookieSession     = require( "cookie-session" );
 const flash             = require( "connect-flash" );
+
+// routes
 const index             = require('./routes/index');
 const users             = require('./routes/users');
 const login             = require( "./routes/login" );
@@ -14,7 +21,7 @@ const register          = require( "./routes/register" );
 const logout            = require( "./routes/logout" );
 const resetpw           = require( "./routes/resetpw" );
 const newpassword       = require( "./routes/newpassword.js" );
-const config            = require( "./config/config.js" );
+const confirmemail      = require( "./routes/confirmemail.js" );
 
 var app = express();
 
@@ -22,9 +29,8 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.png')));
+app.use(logger(':date[iso] :remote-addr :method :url :status :res[content-length] - :response-time ms'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -34,7 +40,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use( cookieSession( {
   name: "session",
   secret: config.cookieSecret,
-  maxAge: 2 * 60 * 60 * 1000
+  maxAge: config.cookieDurationInHours * 60 * 60 * 1000
 }));
 //
 // Make sure that the cookie is updated at least every minute so that the expiration time will be updated
@@ -45,21 +51,19 @@ app.use( function( req, res, next ) {
 });
 
 app.use( flash() );
-/*
- * Prepare for passport authentication
- */
 app.use( passport.initialize() );
 
-app.use( function( req, res, next ) { 
-    console.log( "Session Cookie     : ", req.session );
-    next();
-});
+// app.use( function( req, res, next ) { 
+//     console.log( "Session Cookie     : ", req.session );
+//     next();
+// });
 
 app.use( "/login", login );
 app.use( "/register", register );
 app.use( "/logout", logout );
 app.use( "/resetpw", resetpw );
 app.use( "/newpassword", newpassword );
+app.use( "/confirmemail", confirmemail );
 
 app.use( function( req, res, next ) {
     if ( req.session && req.session.auth ) {
@@ -68,8 +72,6 @@ app.use( function( req, res, next ) {
     console.log( "Not authorized, redirecting to login page." );
     res.redirect( "/login" );
 });
-
-// TODO: Need to refresh stales cookies every N minutes  
 
 app.use('/', index);
 app.use('/users', users);
