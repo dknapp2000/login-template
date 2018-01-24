@@ -73,7 +73,7 @@ async function sendEmainConfirmation( user, emailHTML ) {
     const mailOpts = {
         from: "noreply@electrolux.com",
         to: user.username,
-        subject: "Password reset request",
+        subject: "Email confirmation request",
         html: emailHTML
     };
 

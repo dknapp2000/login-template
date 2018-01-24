@@ -22,6 +22,10 @@ passport.use( new LocalStrategy(
             return done( null, null, { message: "User email has not been verified." } );
         }
 
+        if ( user.is_active !== 'Y' ) {
+            console.log( "User is not activated." );
+            return done( null, null, { message: `User '${user.username}' must be activated by an administrator.` } );
+        }
         const isValidPassword = await validPassword( password, user.password );
 
         if ( isValidPassword ) {
